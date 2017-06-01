@@ -1,0 +1,11 @@
+{% extends 'templates/master.twig' %}
+{% block content %}
+    <div style="padding-top: 100px; padding-bottom: 50px;">
+        <h1>My Names</h1>
+        {% for name in names %}
+            <h2>{{ name.first_name }} {{ name.last_name }}</h2>
+            <p><strong>ID: {{ name.id }}</strong></p>
+        {% endfor %}
+    </div>
+
+{% endblock %}
