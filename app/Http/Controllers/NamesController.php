@@ -27,15 +27,23 @@ class NamesController extends Controller
   {
     $data = $request->input('data');
 
-    $name = Names::where('id', '=', $data['id'])->first();
+    $name = Names::find($data['id']);
 
-    return $name;
-   /* if (!empty($name)) {
+   if (!empty($name)) {
       $name->first_name = $data['first_name'];
       $name->last_name = $data['last_name'];
     }
-    $name->save();
 
-    return redirect('/names');*/
+   if ($name->save()) {
+     return json_encode([
+       'success' => true,
+       'message' => 'Name updated successfully!'
+     ]);
+    } else {
+      return json_encode([
+      'success' => false,
+      'message' => 'Something went wrong. Update error.'
+      ]);
+    }
   }
 }

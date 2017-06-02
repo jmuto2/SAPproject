@@ -15,5 +15,6 @@ class Names extends Model
 {
   protected $primaryKey = 'id';
   protected $fillable = array('first_name', 'last_name');
+  public $timestamps  = false ;
 
 }
