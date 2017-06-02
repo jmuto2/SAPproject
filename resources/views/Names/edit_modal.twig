@@ -1,0 +1,101 @@
+<style>
+    .modal-height {
+        height: 40%;
+    }
+    .modal-cont {
+        height: 100%;
+        padding: 60px;
+    }
+
+    form {
+        background-color: lightblue;
+        border-radius: 25px;
+        box-shadow: 1px 2px 2px #888888;
+        padding: 20px;
+        height: 20%;
+    }
+
+    form label, input {
+        font-size: 16px;
+    }
+
+    .button-group {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .left {
+        float: left;
+    }
+
+    .right {
+        float: right;
+    }
+</style>
+<div id="edit_modal" class="modal fade modal-height" role="dialog">
+    <div class="modal-content modal-cont">
+        <div>
+            <div class="row center-align">
+                <h2>Edit User</h2>
+            </div>
+            <div class="row form">
+                <form @submit.prevent="update">
+                    <div class="form-group row">
+                        <label for="first_name" class="col-sm-2 col-form-label">First Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="first_name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="last_name" class="col-sm-2 col-form-label">Last Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="last_name">
+                        </div>
+                    </div>
+                    <div class="form-group row button-group">
+                        <div class="col s4 input-field left">
+                            <button class="btn blue" data-dismiss="modal">Close</button>
+                        </div>
+                        <div class="col s4 offset-s2 input-field right">
+                            <button class="btn blue" onclick="update()">Update</button>
+                        </div>
+                    </div>
+                    <input type="hidden" class="name_id">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    setTimeout(function () {
+        $('#edit_modal').on('show.bs.modal', function(e) {
+            var $modal = $(this);
+            name_sel = JSON.parse([e.relatedTarget.id]);
+        });
+    }.bind(this), 200);
+
+    var update = function () {
+        name_sel.first_name = document.getElementById("first_name").value !== "" ? document.getElementById("first_name").value : name_sel.first_name;
+        name_sel.last_name  = document.getElementById("last_name").value !== "" ? document.getElementById("last_name").value : name_sel.last_name;
+        $.ajax({
+            url: '/todoapp/public/names/edit',
+            type: 'post',
+            data: {
+                data: name_sel,
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            success: function (data) {
+                $('#edit_modal').modal('hide');
+
+                $("#users_dashboard").notify(
+                    "Name has been updated, thank you!",
+                    { position:"top center" }
+                );
+                console.log(JSON.stringify(data));
+            }
+        });
+    }
+</script>

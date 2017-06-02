@@ -9,8 +9,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Names extends Model
 {
+  protected $primaryKey = 'id';
+  protected $fillable = array('first_name', 'last_name');
 
 }

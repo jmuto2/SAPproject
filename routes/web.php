@@ -1,22 +1,12 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-/*Route::get('/database-test', function () {
+Route::get('/database-test', function () {
   if (DB::connection()->getDatabaseName()) {
       echo 'Connected successfully to database '.DB::connection()->getDatabaseName();
   } else {
       echo 'Connection failed';
   }
-});*/
+});
 
 Route::get('/names', 'NamesController@index');
+Route::post('/names/edit', 'NamesController@edit');

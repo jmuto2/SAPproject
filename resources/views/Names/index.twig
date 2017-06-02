@@ -1,11 +1,64 @@
 {% extends 'templates/master.twig' %}
 {% block content %}
-    <div style="padding-top: 100px; padding-bottom: 50px;">
-        <h1>My Names</h1>
-        {% for name in names %}
-            <h2>{{ name.first_name }} {{ name.last_name }}</h2>
-            <p><strong>ID: {{ name.id }}</strong></p>
-        {% endfor %}
+    <style>
+        #users_dashboard {
+            background-color: lightblue;
+            border-radius: 25px;
+            box-shadow: 1px 2px 2px #888888;
+        }
+
+        #users_dashboard section {
+            padding-bottom: 50px;
+        }
+
+        .label {
+            float: left;
+            padding: 20px;
+            font-size: 30px;
+            color: darkslategray;
+        }
+
+        #users_table tr:first-child th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+    <div id="users_dashboard">
+        <section>
+            <div class="row text-center">
+                <div class="col m12">
+                    <h2 class="label"><strong>Names Table</strong></h2>
+                    <table id="users_table" class="table table-striped">
+                        <tfoot>
+                        <tr>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">First Name</th>
+                            <th class="text-center">Last Name</th>
+                            <th class="text-center"></th>
+                        </tr>
+                        {% for name in names %}
+                            <tr>
+                                <td width="15%" class="text-center">
+                                   {{ name.id }}
+                                </td>
+                                <td width="15%" class="text-center">
+                                   {{ name.first_name }}
+                                </td>
+                                <td width="15%" class="text-center">
+                                   {{ name.last_name }}
+                                </td>
+                                <td width="15%">
+                                    <button class="btn blue" href="#edit_modal" data-toggle="modal" id="{{ name }}">Edit</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </section>
     </div>
+
+    {% include 'Names/edit_modal.twig' %}
 
 {% endblock %}
